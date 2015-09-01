@@ -5,25 +5,25 @@ date:   2015-09-01 23:17:22
 categories: jekyll update
 ---
 
-
 If you've ever clicked random buttons in excel, you've probably
 made a bar plot accidentally at least once in your life.  A staple of business analysis,
 The bar plot is also seen frequently in quarterly reports. Unlike other designs,
 it is much easier to determine the exact numerical value for each point.
 Click on the graph below to continue!
 
+<div id="bar-plot"></div>
+
+
 Using Tufte's data-ink ratio, we begin to see the limitations with bar plot design.
 Despite each data point being represented by a solid rectangle, the only relevant
 information is contained in the top.  We've used a whole lot of ink when just a little
 line would do.
-`<div id="bar-plot"></div>`
 
 Does the solid color rectangle enhance legibility?  Yes, however it also exposes another
 flaw in the bar graph: Do we need a graph at all?  If the goal is legibility and
 the number of data points are few, why not simply list the numbers?
 
 7, 5, 2, 6, 10
-
 
 <style>
 
