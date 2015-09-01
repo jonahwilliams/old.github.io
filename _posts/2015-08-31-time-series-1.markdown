@@ -10,10 +10,7 @@ made a bar plot accidentally at least once in your life.  A staple of business a
 The bar plot is also seen frequently in quarterly reports. Unlike other designs,
 it is much easier to determine the exact numerical value for each point.
 Click on the graph below to continue!
-
 <div id="bar-plot"></div>
-
-
 Using Tufte's data-ink ratio, we begin to see the limitations with bar plot design.
 Despite each data point being represented by a solid rectangle, the only relevant
 information is contained in the top.  We've used a whole lot of ink when just a little
@@ -114,5 +111,3 @@ the number of data points are few, why not simply list the numbers?
 
     })();
 </script>
-[uci]: https://archive.ics.uci.edu/ml/datasets.html
-[yahoo]: https://finance.yahoo.com
