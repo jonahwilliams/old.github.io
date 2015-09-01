@@ -21,7 +21,7 @@ Click on the graph below to continue!
 
 Using Tufte's data-ink ratio, we begin to see the limitations with bar plot design.
 Despite each data point being represented by a solid rectangle, the only relevant
-information is contained in the top.  We've used a whole lot of ink when just a little
+information is mapped to the height.  We've used a whole lot of ink when just a little
 line would do.
 
 Does the solid color rectangle enhance legibility?  Yes, however it also exposes another
@@ -75,9 +75,12 @@ the number of data points are few, why not simply list the numbers?
               .style("stroke-width","1px")
               .transition()
               .duration(2000)
-              .attr("height", function (d) {
+              .attr("width", function (d) {
                   return 1;
-              });
+              })
+							.attr("x", function (d) {
+									return x(d.x) + 0.5 * x.rangeBand();
+							});
             }
         });
 
