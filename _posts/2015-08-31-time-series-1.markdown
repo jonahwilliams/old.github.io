@@ -16,7 +16,7 @@ Using Tufte's data-ink ratio, we begin to see the limitations with bar plot desi
 Despite each data point being represented by a solid rectangle, the only relevant
 information is contained in the top.  We've used a whole lot of ink when just a little
 line would do.
-<div id="bar-plot"></div>
+`<div id="bar-plot"></div>`
 
 Does the solid color rectangle enhance legibility?  Yes, however it also exposes another
 flaw in the bar graph: Do we need a graph at all?  If the goal is legibility and
