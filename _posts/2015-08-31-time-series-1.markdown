@@ -11,8 +11,13 @@ The bar plot is also seen frequently in quarterly reports. Unlike other designs,
 it is much easier to determine the exact numerical value for each point.
 Click on the graph below to continue!
 
+
+
 <div id="bar-plot"></div>
 {::options parse_block_html="true" /}
+
+
+
 
 Using Tufte's data-ink ratio, we begin to see the limitations with bar plot design.
 Despite each data point being represented by a solid rectangle, the only relevant
