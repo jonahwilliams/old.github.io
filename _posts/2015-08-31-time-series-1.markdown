@@ -54,7 +54,7 @@ the number of data points are few, why not simply list the numbers?
     var width = 600 - margin.left - margin.right;
     var height = 500 - margin.top - margin.bottom;
 
-    var svg = d3.select("#bar-plot").append("svg")
+    var svg = d3.select("div#bar-plot").append("svg")
   	  .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
   	  .append("g")
