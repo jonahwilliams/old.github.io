@@ -19,10 +19,14 @@ Click on the graph below to continue!
 
 
 
-Using Tufte's data-ink ratio, we begin to see the limitations with bar plot design.
+Consider Tufte's Data-Ink Ratio:
+
+>A large share of ink on a graphic should present data-information, the ink changing as the data change. Data-ink is the non-erasable core of a graphic, the non-redundant ink arranged in response to variation in the numbers represented.
+-Tufte, 1983
+
 Despite each data point being represented by a solid rectangle, the only relevant
 information is mapped to the height.  We've used a whole lot of ink when just a little
-line would do.
+line would do, because the width of the rectangle was not used to encode any data. Unlike in a histogram, where the width has a statistical interpretation as a range of aggregation, most bar plots use color and width arbitrarily.
 
 Does the solid color rectangle enhance legibility?  Yes, however it also exposes another
 flaw in the bar graph: Do we need a graph at all?  If the goal is legibility and
