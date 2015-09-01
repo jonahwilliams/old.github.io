@@ -1,0 +1,118 @@
+---
+layout: post
+title:  "The Bar Plot"
+date:   2015-09-01 23:17:22
+categories: jekyll update
+---
+
+
+If you've ever clicked random buttons in excel, you've probably
+made a bar plot accidentally at least once in your life.  A staple of business analysis,
+The bar plot is also seen frequently in quarterly reports. Unlike other designs,
+it is much easier to determine the exact numerical value for each point.
+Click on the graph below to continue!
+
+Using Tufte's data-ink ratio, we begin to see the limitations with bar plot design.
+Despite each data point being represented by a solid rectangle, the only relevant
+information is contained in the top.  We've used a whole lot of ink when just a little
+line would do.
+<div id="bar-plot"></div>
+
+Does the solid color rectangle enhance legibility?  Yes, however it also exposes another
+flaw in the bar graph: Do we need a graph at all?  If the goal is legibility and
+the number of data points are few, why not simply list the numbers?
+
+7, 5, 2, 6, 10
+
+
+<style>
+
+.rectangle {
+	fill: steelblue;
+}
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script>
+  (function () {
+    var data = [
+    {'x':1,'y':7}, {'x':2,'y':5}, {'x':3,'y':2},
+    {'x':4,'y':6}, {'x':5, 'y':10}
+    ];
+    var state = 0;
+
+    var margin = {top: 40, right: 40, bottom: 80, left: 40};
+    var width = 600 - margin.left - margin.right;
+    var height = 500 - margin.top - margin.bottom;
+
+    var svg = d3.select("#bar-plot").append("svg")
+  	  .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+  	  .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .on('click', function (d) {
+          if (state == 0) {
+            state = 1;
+            var rects = d3.selectAll(".rectangle")
+              .transition()
+              .duration(2000)
+              .style("fill", "white")
+              .style("stroke","black")
+              .style("stroke-width","1px")
+              .transition()
+              .duration(2000)
+              .attr("height", function (d) {
+                  return 1;
+              });
+            }
+        });
+
+    var y = d3.scale.linear()
+  		.domain([0, d3.max(data, function (d) { return d.y; })])
+  		.range([height, 0]);
+
+  	var x = d3.scale.ordinal()
+  			.domain(data.map(function (d) { return d.x; }))
+  			.rangeRoundBands([0, width], 0.5);
+
+    var xAxis = d3.svg.axis()
+    		.scale(x)
+    	  .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+    		.scale(y)
+    	  .orient("left");
+
+    svg.append("g")
+      	.attr("class", "x axis")
+      	.attr("transform", "translate(0," + height + ")")
+      	.call(xAxis)
+    svg.append("g")
+      	.attr("class", "y axis")
+      	.call(yAxis);
+
+    svg.selectAll("rectangle")
+      	.data(data)
+      	.enter()
+      	.append("rect")
+      	.attr("class","rectangle")
+      	.attr("width", x.rangeBand())
+      	.attr("height", function (d) {
+      			return height - y(d.y);
+      	})
+      	.attr("x", function (d) {return x(d.x);})
+      	.attr("y", function (d) {return y(d.y);});
+
+    })();
+</script>
+[uci]: https://archive.ics.uci.edu/ml/datasets.html
+[yahoo]: https://finance.yahoo.com

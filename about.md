@@ -4,8 +4,10 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+My name is Jonah Williams.  I am a freelance data scientist, full-stack developer,
+and startup enthusiast developing data-driven apps. While I've enjoyed the freelance and graduate work,
+my life is changing and I am looking for more stable employment. I am seeking new challenges, new technologies
+to learn about, new deadlines to meet, but bookended with more consistent paychecks!
+I like to work hard and play hard, and I am looking for a company that does the same.
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
-
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+You can find contact information on my [linkedin](https://www.linkedin.com/in/jonahawilliams)
