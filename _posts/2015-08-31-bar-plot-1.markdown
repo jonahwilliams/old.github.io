@@ -3,6 +3,7 @@ layout: post
 title:  "The Bar Plot"
 date:   2015-09-01 23:17:22
 categories: jekyll update
+comments: true
 ---
 
 If you've ever clicked random buttons in excel, you've probably
@@ -33,6 +34,8 @@ flaw in the bar graph: Do we need a graph at all?  If the goal is legibility and
 the number of data points are few, why not simply list the numbers?
 
 7, 5, 2, 6, 10
+
+
 
 <style>
 
