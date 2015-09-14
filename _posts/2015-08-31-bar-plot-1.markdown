@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The Bar Plot"
+title:  "Always Start a Bar Plot at 0"
 date:   2015-09-01 23:17:22
 categories: jekyll update
 comments: true
@@ -8,9 +8,45 @@ comments: true
 
 If you've ever clicked random buttons in excel, you've probably
 made a bar plot accidentally at least once in your life.  A staple of business analysis,
-The bar plot is also seen frequently in quarterly reports. Unlike other designs,
-it is much easier to determine the exact numerical value for each point.
-Click on the graph below to continue!
+The bar plot is also seen frequently in quarterly reports.  It might be tempting
+to save some space by letting the smallest y value be the minimum instead of 0.
+You might have heard that this is horrible, because it makes the graph misleading.
+While this is intuitive, we should also seek a more explicit explaination!
+
+To study this graph, we'll use an important concept from The Grammar of Graphics;
+the idea of a visual mapping between data and ink.
+
+
+Data &#8596; Position
+
+Data &#8596; Color
+
+Data &#8596; Shape
+
+
+We can think about a graph not as a picture made from data, but as
+a function which accepts data and returns ink. Consider the mapping for our bar
+plot. Our data might look like
+
+		{Type: 1 , Number: 10},
+		{Type: 2 , Number: 7},
+		{Type: 3 , Number: 6},
+		{Type: 4 , Number: 5},
+		{Type: 5 , Number: 2}
+
+
+Then the mapping for a bar plot is the following
+
+Type &#8596; Horizontal Position
+
+Number &#8596; Rectangle Length
+
+??? &#8596; Rectangle Width
+
+??? &#8596; Color
+
+The width of the rectangle and its color seem to be arbitrary.  So what happens if
+we strip them away?
 
 
 
@@ -18,23 +54,26 @@ Click on the graph below to continue!
 {::options parse_block_html="true" /}
 
 
+Now we have our explanation:  we map the numerical quality of our data to this line
+length.  The human eye sees two shapes, and makes a relative comparison.  Its easy
+to tell that the first is roughly twice the length as the second, and the second
+ is only a little more than the third.  Now what happens when we start our graph
+ at zero?  At first glance, bar five appears to be many times larger than bars 2, 3, and 4.  
+ We can see the actual relationship by checking the scales, but this defeats the
+ point of making a graph.
 
 
-Consider Tufte's Data-Ink Ratio:
+ <div id="bar-plot-2"></div>
+ {::options parse_block_html="true" /}
 
->A large share of ink on a graphic should present data-information, the ink changing as the data change. Data-ink is the non-erasable core of a graphic, the non-redundant ink arranged in response to variation in the numbers represented.
--Tufte, 1983
 
-Despite each data point being represented by a solid rectangle, the only relevant
-information is mapped to the height.  We've used a whole lot of ink when just a little
-line would do, because the width of the rectangle was not used to encode any data. Unlike in a histogram, where the width has a statistical interpretation as a range of aggregation, most bar plots use color and width arbitrarily.
+Now what about the bars width and color?  It turns out specific arrangements of
+these bars will create a slight Moiré effect; The width and color softens it's appearance.
+Bar plots aren't very interesting, but this a consequence of our limited data.
+graphs can't be dressed up, but if you really only have 5 data points then
+maybe a list or a table are a better choice.
 
-Does the solid color rectangle enhance legibility?  Yes, however it also exposes another
-flaw in the bar graph: Do we need a graph at all?  If the goal is legibility and
-the number of data points are few, why not simply list the numbers?
-
-7, 5, 2, 6, 10
-
+7, 5, 4, 6, 10
 
 
 <style>
@@ -57,7 +96,7 @@ the number of data points are few, why not simply list the numbers?
 <script>
   (function () {
     var data = [
-    {'x':1,'y':7}, {'x':2,'y':5}, {'x':3,'y':2},
+    {'x':1,'y':7}, {'x':2,'y':5}, {'x':3,'y':4},
     {'x':4,'y':6}, {'x':5, 'y':10}
     ];
     var state = 0;
@@ -74,7 +113,7 @@ the number of data points are few, why not simply list the numbers?
       .on('click', function (d) {
           if (state == 0) {
             state = 1;
-            var rects = d3.selectAll(".rectangle")
+            var rects = d3.selectAll(".rectangle.a")
               .transition()
               .duration(2000)
               .style("fill", "white")
@@ -119,7 +158,7 @@ the number of data points are few, why not simply list the numbers?
       	.data(data)
       	.enter()
       	.append("rect")
-      	.attr("class","rectangle")
+      	.attr("class","rectangle a")
       	.attr("width", x.rangeBand())
       	.attr("height", function (d) {
       			return height - y(d.y);
@@ -128,4 +167,82 @@ the number of data points are few, why not simply list the numbers?
       	.attr("y", function (d) {return y(d.y);});
 
     })();
+		(function(){
+			var data = [
+			{'x':1,'y':7}, {'x':2,'y':5}, {'x':3,'y':4},
+			{'x':4,'y':6}, {'x':5, 'y':10}
+			];
+			var state = 0;
+
+			var margin = {top: 40, right: 40, bottom: 80, left: 40};
+			var width = 600 - margin.left - margin.right;
+			var height = 500 - margin.top - margin.bottom;
+
+			var svg = d3.select("div#bar-plot-2").append("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+				.on('click', function (d) {
+						if (state == 0) {
+							state = 1;
+							y.domain([
+								d3.min(data, function(d) { return d.y; }),
+							  d3.max(data, function(d) { return d.y; })
+								]);
+							yAxis.scale(y);
+
+							d3.selectAll('g.y.axis.b')
+								.transition(1000)
+								.call(yAxis);
+
+							d3.selectAll('.rectangle.b')
+								.transition(1000)
+								.attr("height", function (d) {
+										return height - y(d.y);
+								})
+								.attr("y", function (d) {return y(d.y);});
+
+							}
+					});
+
+			var y = d3.scale.linear()
+				.domain([0, d3.max(data, function(d) { return d.y; })])
+				.range([height, 0]);
+
+			var x = d3.scale.ordinal()
+					.domain(data.map(function (d) { return d.x; }))
+					.rangeRoundBands([0, width], 0.5);
+
+			var xAxis = d3.svg.axis()
+					.scale(x)
+					.orient("bottom");
+
+			var yAxis = d3.svg.axis()
+					.scale(y)
+					.orient("left");
+
+			svg.append("g")
+					.attr("class", "x axis b")
+					.attr("transform", "translate(0," + height + ")")
+					.call(xAxis)
+			svg.append("g")
+					.attr("class", "y axis b")
+					.call(yAxis);
+
+			svg.selectAll("rectangle")
+					.data(data)
+					.enter()
+					.append("rect")
+					.attr("class","rectangle b")
+					.attr("width", "1")
+					.attr("height", function (d) {
+							return height - y(d.y);
+					})
+					.attr("x", function (d) {return x(d.x) + 0.5 * x.rangeBand();})
+	      	.attr("y", function (d) {return y(d.y);})
+					.style("fill", "white")
+					.style("stroke","black")
+					.style("stroke-width","1px");
+		})();
 </script>
